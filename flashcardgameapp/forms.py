@@ -1,9 +1,8 @@
 from django import forms
-#from .models import
 
-from django.contrib.auth import get_user_model
+from .models import User_Profile
 
-
+   
 
 class Registration(forms.Form):
 
@@ -14,3 +13,5 @@ class Registration(forms.Form):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     confirm_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+
+   

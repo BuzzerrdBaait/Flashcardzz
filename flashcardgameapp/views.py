@@ -17,6 +17,7 @@ from .forms import Registration
 from django.http import HttpResponseForbidden
 
 
+
 def home(request):
      test="teeest"
      context = {
@@ -29,6 +30,7 @@ def home(request):
 
 
 def user_profile_view(request):
+     
      user_name='test'
 
      context= {
@@ -41,10 +43,9 @@ def user_profile_view(request):
 
 
 
+
+
 def login_user(request):
-    print('login user tripped')
-
-
 
     if request.method == 'POST':
 
@@ -54,25 +55,21 @@ def login_user(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
 
-            print("user is not none")
+
+        if user is not None:
 
             login(request, user)
 
-
-            return redirect('flashcardgameapp:Home')
+            return redirect('home')
 
         else:
-
-            # Display an error message
 
             error_message = "Invalid credentials"
 
             return render(request, 'Error.html', {'error_message': error_message})
 
     else:
-        print("rendering home.html")
 
         return render(request, 'login.html')
 
@@ -89,7 +86,7 @@ def register(request):
 
             user_data = form.cleaned_data
 
-            new_user = User.objects.create_user(
+            new_user = User_Profile.objects.create_user(
 
                 username=user_data['username'],
 
@@ -98,6 +95,11 @@ def register(request):
                 password=user_data['password'],
 
             )
+
+
+
+
+            
 
             try:
 
@@ -114,7 +116,7 @@ def register(request):
                 print("sending an email failed")
             
 
-            return redirect('flashcardgameapp:login')
+            return redirect('login')
 
     else:
 

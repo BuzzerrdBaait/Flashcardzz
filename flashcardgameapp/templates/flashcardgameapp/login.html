@@ -4,51 +4,23 @@
 
 <html>
 
-
-
 <head>
-
-
 
     <title>Login</title>
 
-
-
-
-
 </head>
-
-
 
 <body>
 
-
-
     {% load static %}
-
-
 
     <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
 
-
-
     <h2>Login</h2>
 
+            <a href="{% url 'register' %}">Need to register?</a>
 
-
-
-
-            <a href="{% url 'flashcardgameapp:register' %}">Need to register?</a>
-
-            <a href="{% url 'flashcardgameapp:Home' %}">Home</a>
-
-            <a href="{% url 'password_reset'%}">Reset Password?</a>
-
-
-
-
-
-
+            <a href="{% url 'home' %}">Home</a>
 
     <form method="post">
 
@@ -66,11 +38,7 @@
 
     </form>
 
-
-
 </body>
-
-
 
 </html>
 
