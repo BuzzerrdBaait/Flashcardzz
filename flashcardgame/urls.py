@@ -10,7 +10,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
-    path("", include("flashcardgameapp.urls")),
+    path(" ", include("flashcardgameapp.urls")),
 
     path('admin/', admin.site.urls),
 

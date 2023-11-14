@@ -1,42 +1,92 @@
 <!DOCTYPE html>
 
+
+
 <html lang="en">
+
+
 
 <head>
 
+
+
     <meta charset="UTF-8">
+
+
 
     <title>{{ deck.title }}</title>
 
+
+
+    <style>
+
+        .card-container {
+
+            display: none;
+
+        }
+
+
+
+        .visible {
+
+            display: block;
+
+        }
+
+    </style>
+
+
+
 </head>
+
+
 
 <body>
 
-     <H1>{{deck.title}}</H1>
+
+
+    <H1>{{ deck.title }}</H1>
 
 
 
     {% for card in cards %}
 
-        <p>Card {{ card.id }}:</p>
+        <div class="card-container" id="card-{{ card.id }}">
 
-        <p>Question: {{ card.question }}</p>
+            <p>Card {{ card.id }}:</p>
 
-        <p>Answer: {{ card.answer }}</p>
+            <p>Question: {{ card.question }}</p>
+
+            <p>Answer: {{ card.answer }}</p>
 
 
 
-        <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
+            <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
 
-            {% csrf_token %}
+                {% csrf_token %}
 
-            <input type="hidden" name="card_id" value="{{ card.id }}">
+                <input type="hidden" name="card_id" value="{{ card.id }}">
 
-            <button type="submit" name="action" value="delete_card">Delete Card</button>
+                <button type="submit" name="action" value="delete_card">Delete Card</button>
 
-        </form>
+            </form>
+
+        </div>
 
     {% endfor %}
+
+
+
+    <div id="navigation-buttons">
+
+        <button onclick="showPrevious()">Previous</button>
+
+        <button onclick="showNext()">Next</button>
+
+    </div>
+
+
 
     <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
 
@@ -44,6 +94,63 @@
 
 
 
+    <script>
+
+        var currentCardIndex = 0;
+
+        var cards = document.querySelectorAll('.card-container');
+
+
+
+        function showCard(index) {
+
+            cards.forEach(function(card, i) {
+
+                card.classList.remove('visible');
+
+                if (i === index) {
+
+                    card.classList.add('visible');
+
+                }
+
+            });
+
+        }
+
+
+
+        function showNext() {
+
+            currentCardIndex = (currentCardIndex + 1) % cards.length;
+
+            showCard(currentCardIndex);
+
+        }
+
+
+
+        function showPrevious() {
+
+            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+
+            showCard(currentCardIndex);
+
+        }
+
+
+
+        // Show the initial card
+
+        showCard(currentCardIndex);
+
+    </script>
+
+
+
 </body>
 
+
+
 </html>
+
