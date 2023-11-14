@@ -43,7 +43,7 @@ class Deck(models.Model):
 
     title = models.CharField(max_length=200)
 
-    cover_photo_text = models.TextField()  # Text field instead of ImageField
+    description = models.TextField()  # Text field instead of ImageField
 
 
 
@@ -59,9 +59,9 @@ class Card(models.Model):
 
     deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
 
-    keywords = models.CharField(max_length=5000, blank=True)
+    question = models.CharField(max_length=5000, blank=True)
 
-    page_text = models.TextField()  # Text field instead of ImageField
+    answer = models.TextField()  # Text field instead of ImageField
 
 
 

@@ -12,19 +12,37 @@
 
 <body>
 
-    <h1>{{ deck.title }}</h1>
+     <H1>{{deck.title}}</H1>
+
+
 
     {% for card in cards %}
 
         <p>Card {{ card.id }}:</p>
 
-        <p>Keywords: {{ card.keywords }}</p>
+        <p>Question: {{ card.question }}</p>
 
-        <p>Page Text: {{ card.page_text }}</p>
+        <p>Answer: {{ card.answer }}</p>
+
+
+
+        <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
+
+            {% csrf_token %}
+
+            <input type="hidden" name="card_id" value="{{ card.id }}">
+
+            <button type="submit" name="action" value="delete_card">Delete Card</button>
+
+        </form>
 
     {% endfor %}
 
     <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+
+    <a href="{% url 'home' %}">Go Home</a>
+
+
 
 </body>
 

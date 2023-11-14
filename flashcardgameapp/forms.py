@@ -19,15 +19,13 @@ class Registration(forms.Form):
 
 
 
-
-
 class DeckForm(forms.ModelForm):
 
     class Meta:
 
         model = Deck
 
-        fields = ['title', 'cover_photo_text']
+        fields = ['title', 'description']
 
 
 
@@ -37,7 +35,7 @@ class CardForm(forms.ModelForm):
 
         model = Card
 
-        fields = ['keywords', 'page_text']
+        fields = ['question', 'answer']
 
 
 
@@ -47,4 +45,16 @@ class UserProfileForm(forms.ModelForm):
 
         model = User_Profile
 
-        fields = ['username', 'email']  # Add other fields as needed
+        fields = ['username', 'email'] 
+
+
+
+class DeleteDeckForm(forms.Form):
+
+    deck_id = forms.IntegerField(widget=forms.HiddenInput)
+
+
+
+class DeleteCardForm(forms.Form):
+
+    card_id = forms.IntegerField(widget=forms.HiddenInput)
