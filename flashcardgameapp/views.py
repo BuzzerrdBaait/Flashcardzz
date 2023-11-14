@@ -18,15 +18,22 @@ from django.http import HttpResponseForbidden
 
 
 
+from django.contrib.auth.decorators import login_required
+
+from .models import Deck, Card
+
+from .forms import DeckForm, CardForm
+
+
+@login_required
+
 def home(request):
-     test="teeest"
-     context = {
 
-        'test': test,
 
-    }
+    user_decks = Deck.objects.filter(user=request.user)
 
-     return render(request, 'home.html', context)
+    return render(request, 'home.html', {'user_decks': user_decks})
+
 
 
 def user_profile_view(request):
@@ -123,3 +130,74 @@ def register(request):
         form = Registration()
 
     return render(request, 'Registration.html', {'form': form})
+
+
+@login_required
+
+def create_deck(request):
+
+    # Create a new flashcard deck
+
+    if request.method == 'POST':
+
+        form = DeckForm(request.POST)
+
+        if form.is_valid():
+
+            deck = form.save(commit=False)
+
+            deck.user = request.user
+
+            deck.save()
+
+            return redirect('home')
+
+    else:
+
+        form = DeckForm()
+
+    return render(request, 'create_deck.html', {'form': form})
+
+
+
+@login_required
+
+def view_deck(request, deck_id):
+
+    # View the flashcards within a deck
+
+    deck = Deck.objects.get(id=deck_id)
+
+    cards = Card.objects.filter(deck=deck)
+
+    return render(request, 'view_deck.html', {'deck': deck, 'cards': cards})
+
+
+
+@login_required
+
+def create_card(request, deck_id):
+
+    # Create a new flashcard within a deck
+
+    deck = Deck.objects.get(id=deck_id)
+
+    if request.method == 'POST':
+
+        form = CardForm(request.POST)
+
+        if form.is_valid():
+
+            card = form.save(commit=False)
+
+            card.deck = deck
+
+            card.save()
+
+            return redirect('view_deck', deck_id=deck.id)
+
+    else:
+
+        form = CardForm()
+
+    return render(request, 'create_card.html', {'form': form, 'deck': deck})

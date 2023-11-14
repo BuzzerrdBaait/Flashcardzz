@@ -1,4 +1,33 @@
-home 
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Flashcard Decks</title>
+
+</head>
+
+<body>
+
+    <h1>Your Flashcard Decks</h1>
+
+    {% for deck in user_decks %}
+
+        <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a><br>
+
+    {% endfor %}
+
+    <a href="{% url 'create_deck' %}">Create a New Deck</a>
+
+</body>
+
 
 
 <a href="{% url 'login' %}">Login</a>
+
+</html>

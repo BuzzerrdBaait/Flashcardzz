@@ -34,3 +34,40 @@ class User_Profile(AbstractUser):
 
         super().save(*args, **kwargs)
 
+
+class Deck(models.Model):
+
+    # Represents a deck of flashcards
+
+    user = models.ForeignKey(User_Profile, on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=200)
+
+    cover_photo_text = models.TextField()  # Text field instead of ImageField
+
+
+
+    def __str__(self):
+
+        return self.title
+
+
+
+class Card(models.Model):
+
+    # Represents a flashcard
+
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
+
+    keywords = models.CharField(max_length=5000, blank=True)
+
+    page_text = models.TextField()  # Text field instead of ImageField
+
+
+
+    def __str__(self):
+
+        return f"Card {self.pk} of {self.deck.title}"
+
+
+

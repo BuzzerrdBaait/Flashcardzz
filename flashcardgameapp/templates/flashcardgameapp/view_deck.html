@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>{{ deck.title }}</title>
+
+</head>
+
+<body>
+
+    <h1>{{ deck.title }}</h1>
+
+    {% for card in cards %}
+
+        <p>Card {{ card.id }}:</p>
+
+        <p>Keywords: {{ card.keywords }}</p>
+
+        <p>Page Text: {{ card.page_text }}</p>
+
+    {% endfor %}
+
+    <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+
+</body>
+
+</html>
