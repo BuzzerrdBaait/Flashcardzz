@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 
-
-
 <html lang="en">
 
 
 
 <head>
 
-
-
     <meta charset="UTF-8">
 
-
-
     <title>{{ deck.title }}</title>
-
-
 
     <style>
 
@@ -36,17 +28,25 @@
 
     </style>
 
-
-
 </head>
 
 
 
 <body>
 
+    <h1>{{ deck.title }}</h1>
 
+    <form method="post" action="{% url 'view_deck' deck.id %}">
 
-    <H1>{{ deck.title }}</H1>
+        {% csrf_token %}
+    
+        
+    
+        <label for="public-deck">Public</label>
+    
+        <input type="checkbox" id="public-deck" name="public" {% if deck.public %}checked{% endif %} onchange="this.form.submit()">
+    
+    </form>
 
 
 
@@ -56,9 +56,13 @@
 
             <p>Card {{ card.id }}:</p>
 
-            <p>Question: {{ card.question }}</p>
+            <div id="content-{{ card.id }}" class="visible">
 
-            <p>Answer: {{ card.answer }}</p>
+                <p class="question">{{ card.question }}</p>
+
+                <p class="answer" style="display: none;">{{ card.answer }}</p>
+
+            </div>
 
 
 
@@ -71,6 +75,10 @@
                 <button type="submit" name="action" value="delete_card">Delete Card</button>
 
             </form>
+
+
+
+            <button onclick="flipCard({{ card.id }})">Flip</button>
 
         </div>
 
@@ -104,7 +112,7 @@
 
         function showCard(index) {
 
-            cards.forEach(function(card, i) {
+            cards.forEach(function (card, i) {
 
                 card.classList.remove('visible');
 
@@ -140,6 +148,24 @@
 
 
 
+        function flipCard(cardId) {
+
+            var content = document.getElementById('content-' + cardId);
+
+            var question = content.querySelector('.question');
+
+            var answer = content.querySelector('.answer');
+
+
+
+            question.style.display = (question.style.display === 'none') ? 'block' : 'none';
+
+            answer.style.display = (answer.style.display === 'none') ? 'block' : 'none';
+
+        }
+
+
+
         // Show the initial card
 
         showCard(currentCardIndex);
@@ -153,4 +179,3 @@
 
 
 </html>
-

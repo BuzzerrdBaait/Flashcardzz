@@ -1,21 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>User Profile</title>
-</head>
 
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Flashcard Decks</title>
+
+</head>
 
 <body>
 
-     <h1>USER PROFILE</h1>
-     {%load static%}
+    <h1>Your Flashcard Decks</h1>
 
-     <title>User Profile</title>
- 
-     <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">   
-     
-     
+    {% for deck in user_decks %}
+
+        <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
+
+        <!-- Add the delete button for each deck -->
+
+        <form method="post" action="{% url 'home' %}" style="display:inline;">
+
+            {% csrf_token %}
+
+            <input type="hidden" name="deck_id" value="{{ deck.id }}">
+
+            <button type="submit" name="action" value="delete_deck">Delete Deck</button>
+
+        </form><br>
+
+    {% endfor %}
+
+    <a href="{% url 'create_deck' %}">Create a New Deck</a>
+
 </body>
+
+</html>
+
+
+
+<a href="{% url 'login' %}">Login</a>
+
 </html>

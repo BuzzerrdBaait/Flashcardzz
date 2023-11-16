@@ -2,10 +2,6 @@ from django import forms
 
 from .models import User_Profile, Deck, Card
 
-
-
-   
-
 class Registration(forms.Form):
 
     username = forms.CharField(label='Username', max_length=100)
@@ -16,18 +12,18 @@ class Registration(forms.Form):
 
     confirm_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
-
-
-
 class DeckForm(forms.ModelForm):
 
     class Meta:
 
         model = Deck
 
-        fields = ['title', 'description']
+        fields = ['title', 'description','public']
 
+        widgets={
 
+            forms.CheckboxInput(),
+        }
 
 class CardForm(forms.ModelForm):
 
@@ -37,8 +33,6 @@ class CardForm(forms.ModelForm):
 
         fields = ['question', 'answer']
 
-
-
 class UserProfileForm(forms.ModelForm):
 
     class Meta:
@@ -47,13 +41,9 @@ class UserProfileForm(forms.ModelForm):
 
         fields = ['username', 'email'] 
 
-
-
 class DeleteDeckForm(forms.Form):
 
     deck_id = forms.IntegerField(widget=forms.HiddenInput)
-
-
 
 class DeleteCardForm(forms.Form):
 

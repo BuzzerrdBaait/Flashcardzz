@@ -27,8 +27,6 @@ from .forms import DeckForm, CardForm, DeleteCardForm, DeleteDeckForm
 
 @login_required
 
-@login_required
-
 def home(request):
 
     user_decks = Deck.objects.filter(user=request.user)
@@ -63,21 +61,40 @@ def home(request):
 
     return render(request, 'home.html', {'user_decks': user_decks, 'delete_deck_form': delete_deck_form})
 
+
 def user_profile_view(request):
      
-     user_name='test'
-
-     context= {
-
-          'username':user_name,
-     }
-
-     return render(request, 'User_Profile.html',context)
+    user_decks = Deck.objects.filter(user=request.user)
 
 
 
+    if request.method == 'POST':
+
+        delete_deck_form = DeleteDeckForm(request.POST)
+
+        delete_card_form = DeleteCardForm(request.POST)
 
 
+
+        if delete_deck_form.is_valid():
+
+            deck_id = delete_deck_form.cleaned_data['deck_id']
+
+            deck_to_delete = get_object_or_404(Deck, id=deck_id, user=request.user)
+
+            deck_to_delete.delete()
+
+            return redirect('home')
+
+
+
+    else:
+
+        delete_deck_form = DeleteDeckForm()
+
+
+
+    return render(request, 'home.html', {'user_decks': user_decks, 'delete_deck_form': delete_deck_form})
 
 def login_user(request):
 
@@ -130,11 +147,7 @@ def register(request):
 
             )
 
-
-
-
-            
-
+        
             try:
 
                 send_mail(
@@ -186,13 +199,11 @@ def create_deck(request):
     return render(request, 'create_deck.html', {'form': form})
 
 
-
-
 @login_required
 
 def view_deck(request, deck_id):
 
-    deck = Deck.objects.get(id=deck_id)
+    deck = get_object_or_404(Deck, id=deck_id)
 
     cards = Card.objects.filter(deck=deck)
 
@@ -212,9 +223,17 @@ def view_deck(request, deck_id):
 
             card_to_delete.delete()
 
-            return redirect('view_deck', deck_id=deck.id)
 
 
+        # Handle the checkbox logic for the entire deck
+
+        deck.public = request.POST.get('public') == 'on'
+
+        deck.save()
+
+
+
+        return redirect('view_deck', deck_id=deck.id)
 
     else:
 
@@ -223,9 +242,6 @@ def view_deck(request, deck_id):
 
 
     return render(request, 'view_deck.html', {'deck': deck, 'cards': cards, 'delete_card_form': delete_card_form})
-
-
-
 
 @login_required
 

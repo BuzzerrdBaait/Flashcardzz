@@ -45,6 +45,8 @@ class Deck(models.Model):
 
     description = models.TextField()  # Text field instead of ImageField
 
+    public= models.BooleanField(default=False)
+
 
 
     def __str__(self):
