@@ -13,8 +13,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('profile/', include('flashcardgameapp.urls')),
-
     path('accounts/', include('django.contrib.auth.urls')),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),

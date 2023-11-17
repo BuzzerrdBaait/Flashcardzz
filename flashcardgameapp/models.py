@@ -37,8 +37,6 @@ class User_Profile(AbstractUser):
 
 class Deck(models.Model):
 
-    # Represents a deck of flashcards
-
     user = models.ForeignKey(User_Profile, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=200)
@@ -46,6 +44,24 @@ class Deck(models.Model):
     description = models.TextField()  # Text field instead of ImageField
 
     public= models.BooleanField(default=False)
+
+    CATEGORY_CHOICES=[
+
+        ('Science','Science'),
+        ('Technology','Technology'),
+        ('Engineering','Engineering'),
+        ('Mathematics','Mathematics'),
+        ('History','History'),
+        ('Literature','Literature'),
+        ('Languages','Languages'),
+        ('Arts','Arts'),
+        ('Health and Medicine','Health & Medicine'),
+        ('Programming','Programming'),
+        ('Misc','Misc.'),
+        
+    ]
+
+    category= models.CharField(max_length=25, default='Misc', choices=CATEGORY_CHOICES)
 
 
 

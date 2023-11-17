@@ -78,11 +78,14 @@
 
 
 
+
             <button onclick="flipCard({{ card.id }})">Flip</button>
 
         </div>
 
     {% endfor %}
+
+
 
 
 
@@ -97,6 +100,25 @@
 
 
     <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+
+    <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
+
+    
+    <form method="post" action="{% url 'view_deck' deck.id %}">
+
+        {% csrf_token %}
+    
+        <input type="hidden" name="deck_id" value="{{ deck.id }}">
+    
+        <label for="public">Public:</label>
+    
+        <input type="checkbox" id="public" name="public" {% if deck.public %}checked{% endif %}>
+    
+        <button type="submit" name="delete_deck">Delete Deck</button>
+    
+    </form>
+
+
 
     <a href="{% url 'home' %}">Go Home</a>
 

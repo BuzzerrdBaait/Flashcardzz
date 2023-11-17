@@ -22,9 +22,11 @@ urlpatterns = [
 
     path('view_deck/<int:deck_id>/', views.view_deck, name='view_deck'),
 
+    path('deck/<int:deck_id>/edit/', views.edit_deck, name='edit_deck'),
+
     path('create_card/<int:deck_id>/', views.create_card, name='create_card'),
 
-    path('profile/<int:pk>/', views.user_profile_view, name="user_profile"),
+    path('profile/<int:user_pk>/', views.user_profile_view, name='user_profile'),
 
     path('login/', views.login_user, name='login'),
 
