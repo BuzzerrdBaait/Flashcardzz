@@ -2,70 +2,54 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views import generic
 from django.urls import reverse_lazy
-from django.views.generic import DetailView 
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views import View 
-from .models import User_Profile
-
+from .models import User_Profile,Deck, Card
 from django.http import HttpResponse
-
 from .forms import Registration
 from django.http import HttpResponseForbidden
-
-
-
 from django.contrib.auth.decorators import login_required
-
-from .models import Deck, Card
-
 from .forms import DeckForm, CardForm, DeleteCardForm, DeleteDeckForm
+from collections import OrderedDict
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+
+User = get_user_model()
 
 
-@login_required
 
 def home(request):
 
-    user_decks = Deck.objects.filter(user=request.user)
+    """_____I imported OrderedDict and created an instance of a dictionary of the Deck.Category choices
+    _____It sorts by the id # so I had to call lambda function and key[1] is used because the keywords 
+    _____are in that column. So basically this is how to sort your items by the category choices defined
+    _____in the model's category dictionary.
+
+    """
+
+    user_decks = Deck.objects.all()
+
+    public_decks_by_category = {}
+
+    category_choices_dict = dict(Deck.CATEGORY_CHOICES)
+
+    sorted_categories = OrderedDict(sorted(category_choices_dict.items(), key=lambda key: key[1]))
+
+    for category in sorted_categories.keys():
+
+        public_decks_by_category[category] = Deck.objects.filter(public=True, category=category).order_by('category')
 
 
+    return render(request, 'home.html', {
 
-    if request.method == 'POST':
+        'user_decks': user_decks,
 
-        delete_deck_form = DeleteDeckForm(request.POST)
+        'public_decks_by_category': public_decks_by_category,
 
-        delete_card_form = DeleteCardForm(request.POST)
-
-
-
-        if delete_deck_form.is_valid():
-
-            deck_id = delete_deck_form.cleaned_data['deck_id']
-
-            deck_to_delete = get_object_or_404(Deck, id=deck_id, user=request.user)
-
-            deck_to_delete.delete()
-
-            return redirect('home')
-
-
-
-    else:
-
-        delete_deck_form = DeleteDeckForm()
-
-
-
-    return render(request, 'home.html', {'user_decks': user_decks, 'delete_deck_form': delete_deck_form})
-
-
-
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+    })
 
 
 def user_profile_view(request, user_pk):
@@ -75,33 +59,31 @@ def user_profile_view(request, user_pk):
     user_decks = Deck.objects.filter(user=user)
 
 
+
     if request.method == 'POST':
 
-        delete_deck_form = DeleteDeckForm(request.POST)
+        for deck in user_decks:
 
-        delete_card_form = DeleteCardForm(request.POST)
+            public_checkbox_name = f'public_{deck.id}'
 
+            if public_checkbox_name in request.POST:
 
+                deck.public = True
 
-        if delete_deck_form.is_valid():
+            else:
 
-            deck_id = delete_deck_form.cleaned_data['deck_id']
+                deck.public = False
 
-            deck_to_delete = get_object_or_404(Deck, id=deck_id, user=request.user)
+            deck.save()
 
-            deck_to_delete.delete()
-
-            return redirect('home')
-
-
-
-    else:
-
-        delete_deck_form = DeleteDeckForm()
+    
 
 
 
-    return render(request, 'home.html', {'user_decks': user_decks, 'delete_deck_form': delete_deck_form})
+
+    return render(request, 'user_profile.html', {'user_decks': user_decks})
+
+
 
 def login_user(request):
 
@@ -134,13 +116,16 @@ def login_user(request):
 
 def register(request):
 
+    """
+    This creates a user model based on the User_Profile model which is the base User model extended.
+    """
+
     if request.method == 'POST':
 
         form = Registration(request.POST)
 
         if form.is_valid():
 
-            # Create a new user account using Django's User model
 
             user_data = form.cleaned_data
 
@@ -181,9 +166,14 @@ def register(request):
 
 @login_required
 
+
+@login_required
+
 def create_deck(request):
 
-    # Create a new flashcard deck
+    """
+    Imported this Deck Form so users can have a view to create new decks
+    """
 
     if request.method == 'POST':
 
@@ -207,21 +197,12 @@ def create_deck(request):
 
 
 
-from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Deck, Card
-
-from .forms import DeleteCardForm, DeleteDeckForm
-
-from django.contrib.auth.decorators import login_required
-
-
-
-@login_required
 
 def view_deck(request, deck_id):
 
     deck = get_object_or_404(Deck, id=deck_id)
+
 
     cards = Card.objects.filter(deck=deck)
 
@@ -246,27 +227,6 @@ def view_deck(request, deck_id):
             card_to_delete.delete()
 
 
-
-        if delete_deck_form.is_valid():
-
-            deck_id = delete_deck_form.cleaned_data['deck_id']
-
-            deck_to_delete = get_object_or_404(Deck, id=deck_id, user=request.user)
-
-            deck_to_delete.delete()
-
-            return redirect('home')
-
-
-
-        # Handle the checkbox logic for the entire deck
-
-        deck.public = request.POST.get('public') == 'on'
-
-        deck.save()
-
-
-
         return redirect('view_deck', deck_id=deck.id)
 
     else:
@@ -275,7 +235,7 @@ def view_deck(request, deck_id):
 
 
 
-    return render(request, 'view_deck.html', {'deck': deck, 'cards': cards, 'delete_card_form': delete_card_form, 'delete_deck_form': delete_deck_form})
+    return render(request, 'view_deck.html', {'deck': deck, 'cards': cards, 'delete_card_form': delete_card_form})
 
 @login_required
 
@@ -320,9 +280,13 @@ def edit_deck(request, deck_id):
 
         if form.is_valid():
 
-            form.save()
+            deck_instance = form.save(commit=False)
 
-            # Redirect to the deck view or any other appropriate page after editing
+            # Get the value of the checkbox and set it to True/False
+
+            deck_instance.public = request.POST.get('public', False) == 'on'
+
+            deck_instance.save()
 
             return redirect('view_deck', deck_id=deck_id)
 

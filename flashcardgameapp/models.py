@@ -82,7 +82,6 @@ class Card(models.Model):
     answer = models.TextField()  # Text field instead of ImageField
 
 
-
     def __str__(self):
 
         return f"Card {self.pk} of {self.deck.title}"

@@ -12,34 +12,55 @@
 
 <body>
 
-    <h1>Your Flashcard Decks</h1>
+    {% if request.user.is_authenticated %}
 
-    {% for deck in user_decks %}
+        <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+        <a href="{% url 'create_deck'%}">Create a deck</a>
 
-        <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
+    {% else %}
 
-        <!-- Add the delete button for each deck -->
+        <a href="{% url 'login' %}">Login</a>
 
-        <form method="post" action="{% url 'home' %}" style="display:inline;">
+    {% endif %}
 
-            {% csrf_token %}
 
-            <input type="hidden" name="deck_id" value="{{ deck.id }}">
 
-            <button type="submit" name="action" value="delete_deck">Delete Deck</button>
+    <h1>All Decks</h1>
 
-        </form><br>
+
+
+    <!-- Display links for public decks based on categories -->
+
+    {% for category, decks in public_decks_by_category.items %}
+
+
+
+        {% if decks %}
+
+            <h2>{{ category }}</h2>
+
+                <ul>
+
+                    {% for deck in decks %}
+
+                        <li>
+
+                            <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
+
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+        {% else %}
+
+        {% endif %}
 
     {% endfor %}
 
-    <a href="{% url 'create_deck' %}">Create a New Deck</a>
+
 
 </body>
-
-</html>
-
-
-
-<a href="{% url 'login' %}">Login</a>
 
 </html>

@@ -18,11 +18,12 @@ class DeckForm(forms.ModelForm):
 
         model = Deck
 
-        fields = ['title', 'description','public','category']
+        fields = ['title', 'description', 'public', 'category']
 
-        widgets={
+        widgets = {
 
-            forms.CheckboxInput(),
+            'public': forms.CheckboxInput(), 
+
         }
 
 class CardForm(forms.ModelForm):

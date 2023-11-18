@@ -35,18 +35,8 @@
 <body>
 
     <h1>{{ deck.title }}</h1>
+    <H4>Made by:{{deck.user}}</H4>
 
-    <form method="post" action="{% url 'view_deck' deck.id %}">
-
-        {% csrf_token %}
-    
-        
-    
-        <label for="public-deck">Public</label>
-    
-        <input type="checkbox" id="public-deck" name="public" {% if deck.public %}checked{% endif %} onchange="this.form.submit()">
-    
-    </form>
 
 
 
@@ -64,22 +54,35 @@
 
             </div>
 
+            
+            <div id="navigation-buttons">
 
+            <button onclick="flipCard({{ card.id }})">Flip</button>
+        
 
+            <button onclick="showPrevious()">Previous</button>
+
+            <button onclick="showNext()">Next</button>
+
+            </div>
+
+            
             <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
 
                 {% csrf_token %}
 
                 <input type="hidden" name="card_id" value="{{ card.id }}">
 
+                {% if deck.user == request.user%}
+
                 <button type="submit" name="action" value="delete_card">Delete Card</button>
+                
+
+                {%endif%}
 
             </form>
 
 
-
-
-            <button onclick="flipCard({{ card.id }})">Flip</button>
 
         </div>
 
@@ -89,34 +92,24 @@
 
 
 
-    <div id="navigation-buttons">
 
-        <button onclick="showPrevious()">Previous</button>
-
-        <button onclick="showNext()">Next</button>
-
-    </div>
+    {% if deck.user == request.user%}
 
 
 
-    <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+        <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
 
-    <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
+        <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
 
-    
-    <form method="post" action="{% url 'view_deck' deck.id %}">
 
-        {% csrf_token %}
-    
-        <input type="hidden" name="deck_id" value="{{ deck.id }}">
-    
-        <label for="public">Public:</label>
-    
-        <input type="checkbox" id="public" name="public" {% if deck.public %}checked{% endif %}>
-    
-        <button type="submit" name="delete_deck">Delete Deck</button>
-    
-    </form>
+    {%endif%}
+
+
+    {% if request.user.is_authenticated %}
+
+    <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+
+    {%endif%}
 
 
 

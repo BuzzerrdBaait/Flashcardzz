@@ -16,23 +16,15 @@
 
     {% for deck in user_decks %}
 
+        <h2>{{deck.category}}</h2>
+
         <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
-
-        <!-- Add the delete button for each deck -->
-
-        <form method="post" action="{% url 'home' %}" style="display:inline;">
-
-            {% csrf_token %}
-
-            <input type="hidden" name="deck_id" value="{{ deck.id }}">
-
-            <button type="submit" name="action" value="delete_deck">Delete Deck</button>
-
-        </form><br>
+        <a href="{% url 'edit_deck' deck.id%}">edit deck</a>
 
     {% endfor %}
 
     <a href="{% url 'create_deck' %}">Create a New Deck</a>
+    <a href="{% url 'home' %}">Home</a>
 
 </body>
 
@@ -40,6 +32,6 @@
 
 
 
-<a href="{% url 'login' %}">Login</a>
+
 
 </html>
