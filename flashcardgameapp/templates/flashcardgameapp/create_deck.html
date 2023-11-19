@@ -24,6 +24,9 @@
 
     </form>
 
+
+    <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+
     <a href="{% url 'home' %}">Go Home</a>
 
 </body>

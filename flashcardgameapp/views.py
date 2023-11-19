@@ -187,7 +187,7 @@ def create_deck(request):
 
             deck.save()
 
-            return redirect('home')
+            return redirect('user_profile', user_pk=request.user.pk)
 
     else:
 
@@ -276,25 +276,39 @@ def edit_deck(request, deck_id):
 
     if request.method == 'POST':
 
-        form = DeckForm(request.POST, instance=deck)
+            form = DeckForm(request.POST, instance=deck)
 
-        if form.is_valid():
+            delete_form = DeleteDeckForm(request.POST)
 
-            deck_instance = form.save(commit=False)
 
-            # Get the value of the checkbox and set it to True/False
 
-            deck_instance.public = request.POST.get('public', False) == 'on'
+            if delete_form.is_valid():
 
-            deck_instance.save()
+                deck.delete()
 
-            return redirect('view_deck', deck_id=deck_id)
+                return redirect('user_profile', user_pk=request.user.pk)
+
+
+
+            if form.is_valid():
+
+                deck_instance = form.save(commit=False)
+
+                deck_instance.public = request.POST.get('public', False) == 'on'
+
+                deck_instance.save()
+
+                return redirect('view_deck', deck_id=deck_id)
 
     else:
 
-        form = DeckForm(instance=deck)
+            form = DeckForm(instance=deck)
+
+            delete_form = DeleteDeckForm(initial={'deck_id': deck_id})
 
 
 
-    return render(request, 'edit_deck.html', {'form': form, 'deck': deck})
+    return render(request, 'edit_deck.html', {'form': form, 'delete_deck_form': delete_form, 'deck': deck})
+
+
 
