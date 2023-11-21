@@ -311,4 +311,24 @@ def edit_deck(request, deck_id):
     return render(request, 'edit_deck.html', {'form': form, 'delete_deck_form': delete_form, 'deck': deck})
 
 
+def about_us(request):
+
+    print("about us triggered")
+
+    return render(request, 'about_us.html')
+
+
+def contact_us(request):
+
+    print("about us triggered")
+
+    return render(request, 'contact_us.html')
+
+def clep_resources(request):
+
+    print("clep_resources")
+
+    return render(request, 'clep_resources.html')
+
+
 

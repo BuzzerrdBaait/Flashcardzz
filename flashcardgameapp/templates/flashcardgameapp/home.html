@@ -2,65 +2,402 @@
 
 <html lang="en">
 
-<head>
+<style>
 
-    <meta charset="UTF-8">
 
-    <title>Flashcard Decks</title>
+    .text-container {
 
-</head>
+        display: inline-block;
+
+        background-color: #d5d5d5;
+
+        width: 100%;
+
+        text-align: center;
+
+
+
+        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
+    }
+
+    h1 {
+
+        background-image: linear-gradient(to right, #ff8a00, #e52e71);
+
+        -webkit-background-clip: text;
+
+        color: transparent;
+
+        font-size: 75px;
+
+        font-weight: bolder;
+
+        font-style:italic;
+
+        font-stretch: expanded;
+
+        font-family: Arial, sans-serif;
+
+        display: flex;
+
+        justify-content: center;
+
+        text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+
+    }
+
+    h2 {
+
+            font-size: 45px;
+            font-style: italic;
+            font-family:'Brush Script MT', cursive;
+    }
+
+    p {
+
+        font-size: 25px;
+        font-style: italic;
+        font-family:'Market Felt', sans-serif;
+
+    }
+
+
+    .list-container {
+
+        display: inline-block;
+
+        background-color: #d5d5d5;
+
+        width: fit-content;
+
+        text-align: center;
+
+        padding-left:15px;
+
+        padding-right:15px;
+
+
+        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
+        }
+
+    ul {
+
+        text-align: center;
+
+        padding-left: 0;
+
+        list-style: none;
+
+    }
+
+
+
+    li {
+
+        text-align: left;
+
+        padding-left: 30px; 
+
+        position: relative;
+
+        margin-bottom: 10px;
+
+    }
+
+
+
+    li::before {
+
+        content: "•";
+
+        position: absolute;
+
+        left: 0;
+
+        transform: translateX(-50%);
+
+    }
+
+
+
+    body {
+
+        background-image: linear-gradient(to right, #ff8a00, #e52e71);
+
+    }
+
+
+    .main-content {
+
+        padding: 50px;
+
+        text-align: center;
+
+        }
+
+
+
+    nav {
+
+        margin-top: 30px;
+
+        }
+
+
+
+    .row {
+
+        display: flex;
+
+        justify-content: center;
+
+        margin-bottom: 20px;
+
+        }
+
+
+
+    .row a {
+
+        display: inline-block;
+
+        text-decoration: none;
+
+        color: #333;
+
+        margin: 0 10px;
+
+        padding: 10px 20px;
+
+        border: 2px solid #333;
+
+        border-radius: 50px;
+
+        transition: background-color 0.3s, color 0.3s;
+
+        }
+
+
+
+    .row a:hover {
+
+        background-color: #333;
+
+        color: #fff;
+
+        }
+
+
+
+    .hero {
+
+        text-align: center;
+
+        padding: 25px 0;
+
+        }
+
+
+
+    .call-to-action {
+
+        background-color: #4caf50;
+
+        color: #fff;
+
+        padding: 15px 30px;
+
+        border-radius: 5px;
+
+        text-decoration: none;
+
+        }
+
+
+</style>
+
+
+
+    <div class="text-container">
+
+        <h1>Flashcardzz</h1>
+
+    </div>
+
+
+
 
 <body>
 
     {% if request.user.is_authenticated %}
 
-        <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
-        <a href="{% url 'create_deck'%}">Create a deck</a>
+
+    <div class="main-content">
+
+        <nav>
+    
+          <div class="row">
+    
+            <a href="{% url 'logout'%}">Log out</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+    
+            <a href="{% url 'contact'%}">Contact</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'clep'%}">CLEP</a>
+    
+          </div>
+    
+        </nav>
+
 
     {% else %}
 
-        <a href="{% url 'login' %}">Login</a>
+    <div class="main-content">
 
+        <nav>
+    
+          <div class="row">
+    
+            <a href="{% url 'login' %}">Login</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'about_us'%}">About Us</a>
+    
+            <a href="{% url 'contact'%}">Contact</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'clep'%}">CLEP</a>
+    
+          </div>
+    
+        </nav>
+    
     {% endif %}
 
 
 
-    <h1>All Decks</h1>
+
+
+    {% if request.user.is_authenticated %}
+
+        <p>Thank you for your support!</p>
+
+    {% else %}
+
+        <div class="list-container">
+
+        <div class="hero">
+
+            <h2>Welcome to our platform!</h2>
+
+            <ul>
+      
+            <li><p>Accelerate your learning with personalized flashcards.</li>
+
+            <li><p> Create and share, and watch knowledge stick!</p></li>
+
+            <li><p>get started today!</p></li>
+      
+            <a href="{% url 'register' %}" class="call-to-action">Create account</a>
+
+            </ul>
+
+            </div>
+
+        </div>
+       
+        </div>
+
+    {%endif%}
 
 
 
-    <!-- Display links for public decks based on categories -->
-
-    {% for category, decks in public_decks_by_category.items %}
 
 
+    <style>
+        .grid-container {
+
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            grid-gap: 20px; 
+
+            height: fit-content;
+
+            
+
+            }
+
+
+
+        .grid-item {
+
+            background-color: #bfbfbf;
+
+        }
+    </style>
+    <div class="grid-container">
+
+        {% for category, decks in public_decks_by_category.items %}
 
         {% if decks %}
-
-            <h2>{{ category }}</h2>
-
+    
+            <div class="grid-item">
+    
+                <h2>{{ category }}</h2>
+    
                 <ul>
-
+    
                     {% for deck in decks %}
-
+    
                         <li>
-
+    
                             <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
-
+    
                         </li>
-
+    
                     {% endfor %}
-
+    
                 </ul>
+    
+            </div>
 
-        {% else %}
+        {%else%}
 
-        {% endif %}
-
-    {% endfor %}
-
+        {%endif%}
+    
+        {% endfor %}
+    
+    </div>
+    
 
 
 </body>
 
 </html>
+
+
+
+
+
+
+
+

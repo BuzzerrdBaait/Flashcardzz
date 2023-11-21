@@ -6,7 +6,7 @@ from . import views
 
 from django.urls import path
 
-from .views import home, create_deck, view_deck, create_card
+from .views import home, create_deck, view_deck, create_card, about_us, contact_us, clep_resources
 
 
 
@@ -28,7 +28,15 @@ urlpatterns = [
 
     path('profile/<int:user_pk>/', views.user_profile_view, name='user_profile'),
 
+    path('about', views.about_us, name='about_us'),
+
+    path('contact', views.contact_us, name='contact'),
+
+    path('clep', views.clep_resources, name='clep'),
+
     path('login/', views.login_user, name='login'),
+
+    path('logout', auth_views.LogoutView.as_view(), name='logout'),
 
     path('admin/', admin.site.urls),
 
