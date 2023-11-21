@@ -9,7 +9,7 @@
 
         display: inline-block;
 
-        background-color: #d5d5d5;
+        background-color: #dfdfdf;
 
         width: 100%;
 
@@ -67,7 +67,7 @@
 
         display: inline-block;
 
-        background-color: #d5d5d5;
+        background-color: #dfdfdf;
 
         width: fit-content;
 
@@ -328,76 +328,111 @@
     {%endif%}
 
 
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js">
+
+        </script>
+    
+        <style>
+    
+    
+            .grid-container {
+    
+    
+                max-width: 100%;
+    
+                display: flex;
+    
+                flex-wrap: wrap;
 
 
-
-    <style>
-        .grid-container {
-
-            display: grid;
-
-            grid-template-columns: repeat(5, 1fr);
-
-            grid-gap: 20px; 
-
-            height: fit-content;
-
-            
-
+    
             }
-
-
-
-        .grid-item {
-
-            background-color: #bfbfbf;
-
-        }
-    </style>
-    <div class="grid-container">
-
-        {% for category, decks in public_decks_by_category.items %}
-
-        {% if decks %}
     
-            <div class="grid-item">
+            .grid-item {
     
-                <h2>{{ category }}</h2>
+                width: 22%;
     
-                <ul>
+                margin: 10px;
     
-                    {% for deck in decks %}
+                background-color: #f2f2f2;
     
-                        <li>
+                border-radius: 5px;
     
-                            <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
+                padding-top: 10px;
     
-                        </li>
+                box-sizing: border-box;
+
+                box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
     
-                    {% endfor %}
     
-                </ul>
+            }
     
-            </div>
-
-        {%else%}
-
-        {%endif%}
+        </style>
     
-        {% endfor %}
+    </head>
     
-    </div>
+    <body>
+    
+        <div class="grid-container">
+    
+            {% for category, decks in public_decks_by_category.items %}
+
+            {% if decks%}
+    
+                <div class="grid-item">
+    
+                    <h2>{{ category }}</h2>
+    
+                    <ul>
+    
+                        {% for deck in decks %}
+    
+                            <li>
+    
+                                <a href="{% url 'view_deck' deck.id %}">{{ deck.title }}</a>
+    
+                            </li>
+    
+                        {% endfor %}
+    
+                    </ul>
+    
+                </div>
+
+            {%endif%}
+    
+            {% endfor %}
+    
+        </div>
+    
+    
+    
+        <script>
+    
+            document.addEventListener('DOMContentLoaded', function() {
     
 
-
-</body>
-
-</html>
-
-
-
-
-
-
-
-
+    
+                var grid = document.querySelector('.grid-container');
+    
+                var masonry = new Masonry(grid, {
+    
+                    itemSelector: '.grid-item',
+    
+                    columnWidth: '.grid-item',
+    
+                    gutter: 5
+    
+                });
+    
+            });
+    
+        </script>
+    
+    </body>
+    
+    </html>
+    
+    
