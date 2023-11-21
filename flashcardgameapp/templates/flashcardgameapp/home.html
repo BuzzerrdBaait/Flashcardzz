@@ -110,7 +110,7 @@
 
     li::before {
 
-        content: "•";
+        content: "★";
 
         position: absolute;
 
@@ -164,6 +164,8 @@
         display: inline-block;
 
         text-decoration: none;
+        
+        font-size: x-large;
 
         color: #333;
 
@@ -171,7 +173,12 @@
 
         padding: 10px 20px;
 
+        margin-bottom: 30px;
+
         border: 2px solid #333;
+
+        box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
 
         border-radius: 50px;
 
@@ -185,6 +192,11 @@
 
         background-color: #333;
 
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+
+        transition: scale(.5);
+
+
         color: #fff;
 
         }
@@ -195,7 +207,8 @@
 
         text-align: center;
 
-        padding: 25px 0;
+
+        padding: 25px 20px;
 
         }
 
@@ -297,8 +310,11 @@
 
     {% if request.user.is_authenticated %}
 
-        <p>Thank you for your support!</p>
+        <div class="hero">
 
+        <p>Thank you for your support!</p>
+            
+        </div>
     {% else %}
 
         <div class="list-container">
@@ -311,7 +327,7 @@
       
             <li><p>Accelerate your learning with personalized flashcards.</li>
 
-            <li><p> Create and share, and watch knowledge stick!</p></li>
+            <li><p> Create and share, then watch knowledge stick!</p></li>
 
             <li><p>get started today!</p></li>
       
@@ -334,7 +350,7 @@
         </script>
     
         <style>
-    
+
     
             .grid-container {
     
@@ -345,29 +361,113 @@
     
                 flex-wrap: wrap;
 
-
     
             }
     
             .grid-item {
     
                 width: 22%;
-    
+
                 margin: 10px;
+
+                text-align: center;
     
                 background-color: #f2f2f2;
+
+                box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
     
                 border-radius: 5px;
     
                 padding-top: 10px;
     
                 box-sizing: border-box;
-
-                box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
-
-    
     
             }
+
+            .grid-item ul {
+
+            text-align: center;
+
+            font-size: x-large;
+
+            padding-left: 5%;
+
+            padding-right: 5%;
+
+
+            list-style: none;
+
+            }
+
+
+            .grid-item li:nth-child(even) {
+
+            text-align: left;
+
+            background-color: #e6e6e6;
+
+
+
+            padding-left: 8px; 
+
+            position: relative;
+
+
+
+            }
+
+            .grid-item li:nth-child(odd) {
+
+            text-align: left;
+
+            background-color: #d6d6d6;
+
+
+
+            padding-left: 8px; 
+
+            position: relative;
+
+
+
+            }
+
+            
+            .grid-item li:nth-child(odd):before{
+
+            content: "▪";
+
+
+            position: absolute;
+
+            background-color: #d6d6d6;
+
+            color:#262626;
+
+            left: 0;
+
+            transform: translateX(-50%);
+
+            }
+
+            .grid-item li:nth-child(even):before {
+
+            content: "▪";
+
+            position: absolute;
+
+            background-color: #e6e6e6;
+
+            color:rgb(57, 57, 57);
+
+            left: 0;
+
+            transform: translateX(-50%);
+
+            }
+
+
     
         </style>
     
@@ -383,7 +483,7 @@
     
                 <div class="grid-item">
     
-                    <h2>{{ category }}</h2>
+                    <p>{{ category }}</p>
     
                     <ul>
     
@@ -412,7 +512,6 @@
         <script>
     
             document.addEventListener('DOMContentLoaded', function() {
-    
 
     
                 var grid = document.querySelector('.grid-container');
@@ -423,11 +522,83 @@
     
                     columnWidth: '.grid-item',
     
-                    gutter: 5
+                    gutter: 10
     
                 });
     
             });
+
+
+            function detectZoom() {
+
+            var ratio = 0,
+
+                screen = window.screen,
+
+                ua = navigator.userAgent.toLowerCase();
+
+
+
+            if (window.devicePixelRatio !== undefined) {
+
+                ratio = window.devicePixelRatio;
+
+            } else if (~ua.indexOf('msie')) {
+
+                if (screen.deviceXDPI && screen.logicalXDPI) {
+
+                    ratio = screen.deviceXDPI / screen.logicalXDPI;
+
+                }
+
+            } else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+
+                ratio = window.outerWidth / window.innerWidth;
+
+            }
+
+
+
+            return ratio;
+
+            }
+
+
+
+            function checkZoomLevel() {
+
+            var zoomLevel = detectZoom();
+
+
+
+
+            if (zoomLevel > 1.24) {
+
+
+                document.querySelectorAll('.grid-item').forEach(function(item) {
+
+                    item.style.width = '98%';
+
+                });
+
+            } else {
+
+
+
+                document.querySelectorAll('.grid-item').forEach(function(item) {
+
+                    item.style.width = '22%';
+
+                });
+
+            }
+
+            }
+
+
+            window.addEventListener('load', checkZoomLevel);
+
+            window.addEventListener('resize', checkZoomLevel);
     
         </script>
     
