@@ -81,7 +81,7 @@ def user_profile_view(request, user_pk):
 
 
 
-    return render(request, 'user_profile.html', {'user_decks': user_decks})
+    return render(request, 'user_profile.html', {'user_decks': user_decks, 'user':user})
 
 
 

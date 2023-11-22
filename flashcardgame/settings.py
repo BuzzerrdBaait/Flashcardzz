@@ -151,7 +151,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
+
+
+print(f"STATIC FILES DIRS-{STATICFILES_DIRS}")
+print(f"Static root is {STATIC_ROOT}")
 
 
 # Default primary key field type
