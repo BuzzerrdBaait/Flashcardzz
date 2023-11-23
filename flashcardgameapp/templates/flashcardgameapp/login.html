@@ -16,13 +16,36 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
 
-    <h2>Login</h2>
+    <link rel="stylesheet" type="text/css" href="{% static 'edit_deck.css' %}">
 
+
+    <div class="text-container">
+
+        <h1>Login</h1>
+
+    </div>
+
+    <div class="main-content">
+
+        <nav>
+    
+          <div class="row">
+    
             <a href="{% url 'register' %}">Need to register?</a>
-
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'home' %}">Home</a>        
+    
             <a href="{%url 'password_reset'%}">Reset password</a>
+    
+          </div>
+    
+    
+        </nav>
 
-            <a href="{% url 'home' %}">Home</a>
 
     <form method="post">
 
@@ -40,7 +63,6 @@
 
     </form>
 
-    <a href="{% url 'home' %}">Go Home</a>
 
 </body>
 

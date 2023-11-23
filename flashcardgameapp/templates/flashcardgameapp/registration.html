@@ -6,19 +6,35 @@
 
     <title>Register</title>
 
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'edit_deck.css' %}">
+
 
 
 </head>
 
 <body>
 
-    <h1>Register</h1>
 
-    <div><a href="{% url 'login' %}">Already a user? Login</a></div>
+    <div class="text-container">
 
-    <div><a href="{% url 'home' %}">Go Home</a></div>
+        <h1>Register</h1>
 
-    <br/><br/>
+    </div>
+
+
+    <div class="main-content">
+
+        <nav>
+    
+          <div class="row">
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'home' %}">Home</a>
+          </div>
+
+        </nav>
 
     {% if submitted %}
 

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 
 {% load static %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'create_deck.css' %}">
+
 
 
 
@@ -35,7 +37,7 @@
         </nav>
 
 
-    <div class="title-form">
+
     <form method="post">
 
         {% csrf_token %}
@@ -45,7 +47,7 @@
         <button type="submit">Create Deck</button>
 
     </form>
-    </div>
+
 
 </body>
 

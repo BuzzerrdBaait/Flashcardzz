@@ -1,5 +1,3 @@
-src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
-
 
 
 document.addEventListener('DOMContentLoaded', function() {

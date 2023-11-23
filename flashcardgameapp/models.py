@@ -24,8 +24,6 @@ class User_Profile(AbstractUser):
 
     def save(self, *args, **kwargs):
 
-        # Generate authentication key before saving
-
         if not self.authentication_key:
 
             self.authentication_key = ''.join(secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(30))
@@ -73,7 +71,6 @@ class Deck(models.Model):
 
 class Card(models.Model):
 
-    # Represents a flashcard
 
     deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
 

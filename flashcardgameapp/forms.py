@@ -18,7 +18,7 @@ class DeckForm(forms.ModelForm):
 
         model = Deck
 
-        fields = ['title', 'description', 'public', 'category']
+        fields = ['title','description', 'category','public']
 
         widgets = {
 

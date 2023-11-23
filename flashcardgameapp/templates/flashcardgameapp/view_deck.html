@@ -3,6 +3,10 @@
 <html lang="en">
 
 
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+
 
 <head>
 
@@ -10,23 +14,14 @@
 
     <title>{{ deck.title }}</title>
 
-    <style>
+    
+    <div class="text-container">
 
-        .card-container {
+        <h1>{{deck.title}}</h1>
 
-            display: none;
+    </div>
+    <p class="admintag">Made by:{{deck.user}}</p>
 
-        }
-
-
-
-        .visible {
-
-            display: block;
-
-        }
-
-    </style>
 
 </head>
 
@@ -34,8 +29,76 @@
 
 <body>
 
-    <h1>{{ deck.title }}</h1>
-    <H4>Made by:{{deck.user}}</H4>
+    
+    <div class="main-content">
+
+        
+
+        <nav>
+        {% if deck.user == request.user%}
+          <div class="row">
+    
+            <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+    
+          </div>
+    
+          <div class="row">
+
+            <a href="{% url 'home' %}">Go Home</a>
+    
+            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
+    
+          </div>
+    
+        </nav>
+
+        {%endif%}
+
+        
+        {% if request.user != deck.user%}
+
+        <nav>
+
+    
+          <div class="row">
+
+            <a href="{% url 'home' %}">Go Home</a>
+    
+            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+    
+          </div>
+    
+    
+        </nav>
+
+        {%endif%}
+
+        {% if not request.user%}
+
+
+        <nav>
+
+    
+            <div class="row">
+  
+              <a href="{% url 'home' %}">Go Home</a>
+    
+      
+            </div>
+      
+      
+          </nav>
+
+     
+
+
+        {%endif%}
 
 
 
@@ -44,7 +107,7 @@
 
         <div class="card-container" id="card-{{ card.id }}">
 
-            <p>Card {{ card.id }}:</p>
+            <p>Card {{ forloop.counter}}:</p>
 
             <div id="content-{{ card.id }}" class="visible">
 
@@ -87,35 +150,6 @@
         </div>
 
     {% endfor %}
-
-
-
-
-
-
-    {% if deck.user == request.user%}
-
-
-
-        <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
-
-        <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
-
-
-    {%endif%}
-
-
-    {% if request.user.is_authenticated %}
-
-    <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
-
-    {%endif%}
-
-
-
-    <a href="{% url 'home' %}">Go Home</a>
-
-
 
     <script>
 
