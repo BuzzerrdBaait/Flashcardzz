@@ -2,10 +2,12 @@
 
 <html lang="en">
 
-
 {% load static %}
 
+
+
 <link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+
 
 
 <head>
@@ -14,14 +16,13 @@
 
     <title>{{ deck.title }}</title>
 
-    
     <div class="text-container">
 
         <h1>{{deck.title}}</h1>
 
     </div>
-    <p class="admintag">Made by:{{deck.user}}</p>
 
+    <p class="admintag">Made by:{{deck.user}}</p>
 
 </head>
 
@@ -29,202 +30,320 @@
 
 <body>
 
-    
     <div class="main-content">
 
-        
-
-        <nav>
-        {% if deck.user == request.user%}
-          <div class="row">
-    
-            <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
-    
-          </div>
-    
-          <div class="row">
-
-            <a href="{% url 'home' %}">Go Home</a>
-    
-            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
-    
-          </div>
-    
-          <div class="row">
-    
-            <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
-    
-          </div>
-    
-        </nav>
-
-        {%endif%}
-
-        
-        {% if request.user != deck.user%}
-
         <nav>
 
-    
-          <div class="row">
+            {% if deck.user == request.user %}
 
-            <a href="{% url 'home' %}">Go Home</a>
-    
-            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
-    
-          </div>
-    
-    
-        </nav>
-
-        {%endif%}
-
-        {% if not request.user%}
-
-
-        <nav>
-
-    
             <div class="row">
-  
-              <a href="{% url 'home' %}">Go Home</a>
-    
-      
-            </div>
-      
-      
-          </nav>
 
-     
-
-
-        {%endif%}
-
-
-
-
-    {% for card in cards %}
-
-        <div class="card-container" id="card-{{ card.id }}">
-
-            <p>Card {{ forloop.counter}}:</p>
-
-            <div id="content-{{ card.id }}" class="visible">
-
-                <p class="question">{{ card.question }}</p>
-
-                <p class="answer" style="display: none;">{{ card.answer }}</p>
+                <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
 
             </div>
 
-            
-            <div id="navigation-buttons">
+            <div class="row">
 
-            <button onclick="flipCard({{ card.id }})">Flip</button>
-        
+                <a href="{% url 'home' %}">Go Home</a>
 
-            <button onclick="showPrevious()">Previous</button>
-
-            <button onclick="showNext()">Next</button>
+                <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
 
             </div>
 
-            
-            <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
+            <div class="row">
 
-                {% csrf_token %}
+                <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
 
-                <input type="hidden" name="card_id" value="{{ card.id }}">
+            </div>
 
-                {% if deck.user == request.user%}
+            </nav>
 
-                <button type="submit" name="action" value="delete_card">Delete Card</button>
+            {% endif %}
+
+
+
+            {% if request.user and request.user != deck.user and not request.user.is_anonymous %}
+
+            <nav>
+
+                <div class="row">
+
+                    <a href="{% url 'home' %}">Go Home</a>
+
+                    <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+
+                </div>
+
+            </nav>
+
+            {% endif %}
+
+
+
+            {% if request.user.is_anonymous %}
+
+            <nav>
+
+                <div class="row">
+
+                    <a href="{% url 'home' %}">Go Home</a>
+
+                </div>
+
+            </nav>
+
+            {% endif %}
+
+
+            <style>
+
+
+.card-container {
+
+perspective: 1000px;
+
+width: 100%;
+
+white-space: normal;
+
+height: 500px;
+
+display: inline-block;
+
+
+
+}
+
+
+.card-inner {
+
+width: 100%;
+
+height: 100%;
+
+border-radius: 5%;
+
+transform-style: preserve-3d;
+
+transition: transform 0.5s;
+
+box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+.card-container.flipped .card-inner {
+
+transform: rotateY(180deg);
+
+}
+
+
+
+.card-front,
+
+.card-back {
+
+width: 100%;
+
+height: 100%;
+
+position: absolute;
+
+backface-visibility: hidden;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-size: 20px;
+
+color: #fff;
+
+border-radius: 5%;
+
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+
+}
+
+.navmenu{
+
+  padding:20px;
+}
+
+
+
+.card-front {
+
+background-color: #3498db; /* Blue */
+
+border-radius: 5%;
+
+}
+
+
+
+.card-back {
+
+  border-radius: 5%;
+
+background-color: #e74d3c19; /* Red */
+
+transform: rotateY(180deg);
+
+
+
+}
+.card-position{
+
+  margin:0, auto;
+  align-items: center;
+
+  display:flex;
+  justify-content: center;
+}
+          
+          </style>
+
+
+<div class="card-position">
+          
+            {% for card in cards %}
+
+            <div class="card-container" id="card-{{ card.id }}">
+
+              <p>Card {{ forloop.counter}}:</p>
+
+
+
+                    <div class="card-inner">
+
+                        <div class="card-front">
+
+                            
+
+                            <div id="content-{{ card.id }}" class="visible">
+
+                                <p class="question">{{ card.question }}</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card-back">
+
+                            <p class="answer">{{ card.answer }}</p>
+
+                        </div>
+
                 
 
-                {%endif%}
-
-            </form>
+                </div>
 
 
 
-        </div>
+                <div class="navmenu">
 
-    {% endfor %}
+                    <button onclick="flipCard({{ card.id }})">Flip</button>
 
-    <script>
+                    <button onclick="showPrevious()">Previous</button>
 
-        var currentCardIndex = 0;
+                    <button onclick="showNext()">Next</button>
 
-        var cards = document.querySelectorAll('.card-container');
+                    <form method="post" action="{% url 'view_deck' deck.id %}">
+
+                      {% csrf_token %}
+  
+                      <input type="hidden" name="card_id" value="{{ card.id }}">
+  
+                      {% if deck.user == request.user %}
+  
+                      <button type="submit" name="action" value="delete_card">Delete Card</button>
+
+
+                </div>
+
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+            {% endfor %}
+
+          </div>
 
 
 
-        function showCard(index) {
+            
 
-            cards.forEach(function (card, i) {
 
-                card.classList.remove('visible');
 
-                if (i === index) {
+            <script>
 
-                    card.classList.add('visible');
+                var currentCardIndex = 0;
+
+                var cards = document.querySelectorAll('.card-container');
+
+
+
+                function showCard(index) {
+
+                    cards.forEach(function (card, i) {
+
+                        card.classList.remove('flipped');
+
+                        card.style.display = (i === index) ? 'block' : 'none';
+
+                    });
 
                 }
 
-            });
-
-        }
 
 
+                function showNext() {
 
-        function showNext() {
+                    currentCardIndex = (currentCardIndex + 1) % cards.length;
 
-            currentCardIndex = (currentCardIndex + 1) % cards.length;
+                    showCard(currentCardIndex);
 
-            showCard(currentCardIndex);
-
-        }
+                }
 
 
 
-        function showPrevious() {
+                function showPrevious() {
 
-            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+                    currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
 
-            showCard(currentCardIndex);
+                    showCard(currentCardIndex);
 
-        }
-
-
-
-        function flipCard(cardId) {
-
-            var content = document.getElementById('content-' + cardId);
-
-            var question = content.querySelector('.question');
-
-            var answer = content.querySelector('.answer');
+                }
 
 
 
-            question.style.display = (question.style.display === 'none') ? 'block' : 'none';
+                function flipCard(cardId) {
 
-            answer.style.display = (answer.style.display === 'none') ? 'block' : 'none';
+                    var cardContainer = document.getElementById('card-' + cardId);
 
-        }
+                    cardContainer.classList.toggle('flipped');
 
-
-
-        // Show the initial card
-
-        showCard(currentCardIndex);
-
-    </script>
+                }
 
 
+
+                // Show the initial card
+
+                showCard(currentCardIndex);
+
+            </script>
 
 </body>
 
-
-
 </html>
+

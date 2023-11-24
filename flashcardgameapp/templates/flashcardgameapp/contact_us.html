@@ -1,13 +1,249 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css.css' %}">
+
+
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
+
+    <meta charset="UTF-8">
+
+    <title>{{ deck.title }}</title>
+
+    
+    <div class="text-container">
+
+        <h1>{{deck.title}}</h1>
+
+    </div>
+    <p class="admintag">Made by:{{deck.user}}</p>
+
+
 </head>
+
+
+
 <body>
 
-     <p>contact us</p>
+    
+    <div class="main-content">
+
+        
+
+        <nav>
+        {% if deck.user == request.user%}
+          <div class="row">
+    
+            <a href="{% url 'create_card' deck.id %}">Create a New Card</a>
+    
+          </div>
+    
+          <div class="row">
+
+            <a href="{% url 'home' %}">Go Home</a>
+    
+            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+    
+          </div>
+    
+          <div class="row">
+    
+            <a href="{% url 'edit_deck' deck.id %}">Edit Deck</a>
+    
+          </div>
+    
+        </nav>
+
+        {%endif%}
+
+        
+        {% if request.user and request.user != deck.user and not request.user.is_anonymous%}
+
+        <nav>
+
+    
+          <div class="row">
+
+            <a href="{% url 'home' %}">Go Home</a>
+    
+            <a href="{% url 'user_profile' request.user.pk %}">Your Profile</a>
+    
+          </div>
+    
+    
+        </nav>
+
+        {%endif%}
+
+        {% if request.user.is_anonymous%}
+        
+        <nav>
+
+    
+          <div class="row">
+
+            <a href="{% url 'home' %}">Go Home</a>
+    
+          </div>
+    
+    
+        </nav>
+
      
+        {%endif%}
+
+
+    <style>
+
+
+      .card{
+        
+
+        background-color: red;
+
+        width:50%;
+
+        margin:0 auto;
+      }
+
+    </style>
+
+
+
+    {% for card in cards %}
+
+
+
+        <div class="card-container" id="card-{{ card.id }}">
+
+          <div class="card">
+
+            <p>Card {{ forloop.counter}}:</p>
+
+            <div id="content-{{ card.id }}" class="visible">
+
+                <p class="question">{{ card.question }}</p>
+
+                <p class="answer" style="display: none;">{{ card.answer }}</p>
+
+            </div>
+            </div>
+    
+
+            
+            <div id="navigation-buttons">
+
+            <button onclick="flipCard({{ card.id }})">Flip</button>
+        
+
+            <button onclick="showPrevious()">Previous</button>
+
+            <button onclick="showNext()">Next</button>
+
+            </div>
+
+            
+            <form method="post" action="{% url 'view_deck' deck.id %}" style="display:inline;">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="card_id" value="{{ card.id }}">
+
+                {% if deck.user == request.user%}
+
+                <button type="submit" name="action" value="delete_card">Delete Card</button>
+                
+
+                {%endif%}
+
+            </form>
+
+
+
+        </div>
+
+    {% endfor %}
+
+
+    <!DOCTYPE html>
+
+<d>
+
+  <meta charset="UTF-8">
+
+  <methtml lang="en">
+
+<heaa name="viewport" content="width=device-width, initial-scale=1.0">
+
+ 
+
+    <script>
+
+      var currentCardIndex = 0;
+  
+      var cards = document.querySelectorAll('.card-container');
+  
+  
+  
+      function showCard(index) {
+  
+          cards.forEach(function (card, i) {
+  
+              card.style.display = (i === index) ? 'block' : 'none';
+  
+          });
+  
+      }
+  
+  
+  
+      function showNext() {
+  
+          currentCardIndex = (currentCardIndex + 1) % cards.length;
+  
+          showCard(currentCardIndex);
+  
+      }
+  
+  
+  
+      function showPrevious() {
+  
+          currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+  
+          showCard(currentCardIndex);
+  
+      }
+  
+  
+  
+      function flipCard(cardId) {
+  
+          var content = document.getElementById('content-' + cardId);
+  
+          var question = content.querySelector('.question');
+  
+          var answer = content.querySelector('.answer');
+  
+          question.style.display = (question.style.display === 'none') ? 'block' : 'none';
+  
+          answer.style.display = (answer.style.display === 'none') ? 'block' : 'none';
+  
+      }
+  
+  
+  
+      // Show the initial card
+  
+      showCard(currentCardIndex);
+  
+  </script>
 </body>
+
+
+
 </html>
