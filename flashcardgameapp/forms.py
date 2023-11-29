@@ -1,6 +1,7 @@
 from django import forms
 
-from .models import User_Profile, Deck, Card
+from .models import User_Profile, Deck, Card, Contact
+
 
 class Registration(forms.Form):
 
@@ -49,3 +50,20 @@ class DeleteDeckForm(forms.Form):
 class DeleteCardForm(forms.Form):
 
     card_id = forms.IntegerField(widget=forms.HiddenInput)
+
+
+
+class ContactForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Contact
+
+        fields = ['name', 'email', 'message']
+
+
+class AuthenticationForm(forms.Form):
+
+    authentication_key = forms.CharField(max_length=50, required=True)
+
+    

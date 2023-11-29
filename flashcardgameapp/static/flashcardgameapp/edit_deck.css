@@ -23,6 +23,7 @@ form {
      
      width: 25%;
      
+
      padding: 10px;
      
      margin-bottom: 15px;
@@ -48,8 +49,8 @@ form {
 
      font-family:'Market Felt', sans-serif;
      
-     width: 50%;
-     
+     width: 38%;
+
      padding: 10px;
      
      margin-bottom: 15px;
@@ -65,6 +66,8 @@ form {
      border-radius: 5px;
      
      box-sizing: border-box;
+
+     white-space:pre-wrap;
      
      }
      
@@ -111,6 +114,7 @@ form {
      
          width: 25px; 
          height: 25px;
+         
      
      }
      

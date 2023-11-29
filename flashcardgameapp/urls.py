@@ -6,7 +6,7 @@ from . import views
 
 from django.urls import path
 
-from .views import home, create_deck, view_deck, create_card, about_us, contact_us, clep_resources
+from .views import home, create_deck, view_deck, create_card, about_us, contact_view, clep_resources, authenticate_user
 
 
 
@@ -30,7 +30,7 @@ urlpatterns = [
 
     path('about', views.about_us, name='about_us'),
 
-    path('contact', views.contact_us, name='contact'),
+    path('contact', views.contact_view, name='contact'),
 
     path('clep', views.clep_resources, name='clep'),
 
@@ -50,6 +50,8 @@ urlpatterns = [
 
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-
+    path('authenticate/<str:authentication_link>/', views.authenticate_user, name='authenticate_user'),
 ]
+
+
 

@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import User_Profile
-# Register your models here.
+from .models import User_Profile,WebImgs,Contact
 
 
 
@@ -18,3 +17,27 @@ class User_Profile_Admin(admin.ModelAdmin):
 
 admin.site.register(User_Profile, User_Profile_Admin)
 
+
+
+class web_img_admin(admin.ModelAdmin):
+
+    list_display=('title','image')
+
+admin.site.register(WebImgs,web_img_admin)
+
+
+
+
+
+
+class ContactAdmin(admin.ModelAdmin):
+
+    list_display = ('name', 'email', 'current_date')
+
+    search_fields = ('name', 'email', 'message')
+
+    list_filter = ('current_date',)
+
+    ordering = ('-current_date',)
+
+admin.site.register(Contact,ContactAdmin)
