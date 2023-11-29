@@ -23,7 +23,7 @@ import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print("------------------------PRODUCTION SETTINGS TRIGGERED---------------------")
 
 
 
@@ -55,8 +55,13 @@ CSRF_COOKIE_SECURE=True
 SESSION_COOKIE_SECURE=True
 DEBUG = False
 
+
+print("!!!!!!!!!!!!!!!!!!!!!!!!!allowed host BEFORE!!!!!!!!!!!!!")
+
 ALLOWED_HOSTS = ['*','flashcardzz-bd40a7dc896c.herokuapp.com']
 
+
+print("!!!!!!!!!!!!!!!!!!!!!!!!!allowed host AFTER !!!!!!!!!!!!!")
 
 django_heroku.settings(locals())
 
