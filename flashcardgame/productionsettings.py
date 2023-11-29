@@ -58,6 +58,10 @@ DEBUG = False
 ALLOWED_HOSTS = ['*','flashcardzz-bd40a7dc896c.herokuapp.com']
 
 
+django_heroku.settings(locals())
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -79,6 +83,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'flashcardgameapp.urls'
 
