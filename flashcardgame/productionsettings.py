@@ -12,18 +12,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import boto3
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 import os
-
-
-
+from pathlib import Path
+import django_heroku
+import dj_database_url
+from decouple import config
+import boto3
+import dj_database_url
+import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
+
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 ##############A M A Z O N   M E D I A   P A T H S###################
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')            #
@@ -45,23 +49,13 @@ AWS_DEFAULT_ACL='public-read'
 AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
 ####################################################################
 
-#--_-_-_BASE MEDIA-_---___-___-_
 
-#MEDIA_ROOT= os.path.join(BASE_DIR,'media')
+CSRF_COOKIE_SECURE=True
 
-#MEDIA_URL= '/media/'
+SESSION_COOKIE_SECURE=True
+DEBUG = False
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j2gk-@k0dz)plf_5s7p_j(r+$t%#6kf^c1%n@5+d=cc274oi+q'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -183,6 +177,13 @@ print(f"Static root is {STATIC_ROOT}")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
