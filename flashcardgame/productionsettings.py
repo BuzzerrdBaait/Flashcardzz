@@ -55,7 +55,7 @@ CSRF_COOKIE_SECURE=True
 SESSION_COOKIE_SECURE=True
 DEBUG = False
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*','flashcardzz-bd40a7dc896c.herokuapp.com']
 
 
 # Application definition
