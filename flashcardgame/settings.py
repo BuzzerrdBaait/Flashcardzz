@@ -121,7 +121,7 @@ DB_USER= os.environ.get('DB_USER')
 DB_PASSWORD= os.environ.get('DB_PASSWORD')
 
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 
 
@@ -184,15 +184,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
 
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Use S3 for media files storage
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
-print(f"STATIC FILES DIRS-{STATICFILES_DIRS}")
-print(f"Static root is {STATIC_ROOT}")
 
 
 
