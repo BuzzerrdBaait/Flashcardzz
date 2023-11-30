@@ -93,6 +93,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+django_heroku.settings(locals())
+
 
 
 ROOT_URLCONF = 'flashcardgameapp.urls'
