@@ -9,9 +9,6 @@ def main():
 
     env = os.environ.get('localenv')
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.productionsettings')
-
-
     if env:
 
         print("FOUND A LOCAL ENVIRONMENT VARIABLE ??? ")
