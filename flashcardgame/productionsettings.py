@@ -63,11 +63,6 @@ ALLOWED_HOSTS = ['*',]
 
 print("!!!!!!!!!!!!!!!!!!!!!!!!!allowed host AFTER !!!!!!!!!!!!!")
 
-django_heroku.settings(locals())
-
-
-
-# Application definition
 
 INSTALLED_APPS = [
      "whitenoise.runserver_nostatic",
