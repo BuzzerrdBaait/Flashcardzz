@@ -5,15 +5,13 @@ import sys
 
 
 def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.settings')
 
 
     env = os.environ.get('localenv')
 
     if env:
 
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'flashcardgame.settings')
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.settings')
 
     else:
         print('USING PROD ENVIRONMENT')
