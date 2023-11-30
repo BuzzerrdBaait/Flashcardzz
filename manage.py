@@ -9,7 +9,7 @@ def main():
 
     env = os.environ.get('localenv')
 
-    if env:
+    if env == 'localenv':
 
         print("FOUND A LOCAL ENVIRONMENT VARIABLE ??? ")
 
