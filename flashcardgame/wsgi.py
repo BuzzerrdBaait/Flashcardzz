@@ -11,7 +11,8 @@ import os
 print('wsgi TRIGGEREDDD!!!!')
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.settings')
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.productionsettings')
 
 application = get_wsgi_application()
 
