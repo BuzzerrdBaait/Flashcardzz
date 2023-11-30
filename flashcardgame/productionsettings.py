@@ -58,7 +58,7 @@ DEBUG = False
 
 print("!!!!!!!!!!!!!!!!!!!!!!!!!allowed host BEFORE!!!!!!!!!!!!!")
 
-ALLOWED_HOSTS = ['*','flashcardzz-bd40a7dc896c.herokuapp.com']
+ALLOWED_HOSTS = ['*',]
 
 
 print("!!!!!!!!!!!!!!!!!!!!!!!!!allowed host AFTER !!!!!!!!!!!!!")
