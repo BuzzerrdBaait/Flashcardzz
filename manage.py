@@ -16,6 +16,7 @@ def main():
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'flashcardgame.settings')
 
     else:
+        print('USING PROD ENVIRONMENT')
 
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'flashcardgame.productionsettings')
 
