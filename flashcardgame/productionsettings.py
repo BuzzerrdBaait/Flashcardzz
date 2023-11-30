@@ -42,13 +42,14 @@ COMPRESS_URL= CLOUDFRONT_URL
 STATIC_URL = '/static/'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' <---ACTIVATE this when going to deployment
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = CLOUDFRONT_URL
+#MEDIA_URL = CLOUDFRONT_URL
 CLOUDFRONT_PUB_KEY=os.getenv('CLOUDFRONT_PUB')
 CLOUDFRONT_SECRET=os.getenv('CLOUDFRONT_SECRET')
 AWS_DEFAULT_ACL='public-read'
 AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
 ####################################################################
-
+MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CSRF_COOKIE_SECURE=True
 
@@ -78,6 +79,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -175,13 +177,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
 
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'flashcardgameapp', 'static'))
 
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
