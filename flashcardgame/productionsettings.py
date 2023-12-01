@@ -29,7 +29,7 @@ if not IS_HEROKU_APP:
 
 
 if IS_HEROKU_APP:
-    DEBUG= True
+    DEBUG=False
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []
