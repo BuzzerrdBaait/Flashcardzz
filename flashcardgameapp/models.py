@@ -31,7 +31,7 @@ class User_Profile(AbstractUser):
     """
     AUTHENTICATION LINK CODE
     """
-    authentication_link = models.CharField(max_length=50, unique=True, default='authenticate_your_acct')
+    authentication_link = models.CharField(max_length=50, default='authenticate_your_acct')
 
     def generate_unique_link(self):
 
