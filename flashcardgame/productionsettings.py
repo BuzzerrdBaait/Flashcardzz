@@ -88,7 +88,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 INSTALLED_APPS = [
 
     ##### H E R O K U    B U L L S H I T #######################
-    #"whitenoise.runserver_nostatic",
+    "whitenoise.runserver_nostatic",
     ##### "serves static files my ass!  ##############"
     'flashcardgameapp',
     'django.contrib.admin',
@@ -102,7 +102,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     ##### H E R O K U    B U L L S H I T #######################
-    #"whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     ##### "serves static files my ass!  ##############"
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -218,7 +218,7 @@ USE_TZ = True
 
 ########################################################
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
-#STATIC_URL = 'static/'
+STATIC_URL = 'static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
 
 
@@ -231,13 +231,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
 
 
 ########### H E R O K U    B U L L S H I T ####################
-#STORAGES = {
-#    # Enable WhiteNoise's GZip and Brotli compression of static assets:
-#    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
-#    "staticfiles": {
-#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#    },
-#}
+STORAGES = {
+    # Enable WhiteNoise's GZip and Brotli compression of static assets:
+    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 ###############################################################
 
 
