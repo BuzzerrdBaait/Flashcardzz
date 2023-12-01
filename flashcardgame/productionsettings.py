@@ -90,7 +90,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     ##### "serves static files my ass!  ##############"
     'flashcardzz.flashcardgameapp',
-    'flashcardgame',
+   # 'flashcardgame',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
