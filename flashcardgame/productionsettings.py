@@ -29,14 +29,11 @@ if not IS_HEROKU_APP:
 
 
 if IS_HEROKU_APP:
+    DEBUG= False
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []
 ######################## E N D  ##############################
-
-
-
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -62,7 +59,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
 
 
-DEBUG = False
 
 
 
@@ -186,10 +182,11 @@ USE_TZ = True
 
 ############ H E R O K U    B U L L S H I T ##############
 
-# Have to replace my real static path --> STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
+
 # with this...
-STATIC_ROOT= BASE_DIR /"staticfiles"
+
 ########################################################
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
 
