@@ -40,32 +40,55 @@ else:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ##############A M A Z O N   M E D I A   P A T H S###################
-#AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')            #
-#AWS_SECRET_ACCESS_KEY =os.environ.get('AWS_SECRET_ACCESS_KEY')     #
-#AWS_STORAGE_BUCKET_NAME =os.environ.get('S3_BUCKET')               #
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')            #
+AWS_SECRET_ACCESS_KEY =os.environ.get('AWS_SECRET_ACCESS_KEY')     #
+AWS_STORAGE_BUCKET_NAME =os.environ.get('S3_BUCKET')               #
 #CLOUDFRONT_URL = 'https://d17usxoyp786nd.cloudfront.net/'          #
-#DJANGO_STATIC = True                                               #
-#DJANGO_STATIC_FILE_PROXY = 'cloudfront.file_proxy'                 #
+DJANGO_STATIC = True                                               #
+DJANGO_STATIC_FILE_PROXY = 'cloudfront.file_proxy'                 #
 #COMPRESS_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #COMPRESS_ENABLED= True
 #COMPRESS_URL= CLOUDFRONT_URL
 #STATIC_URL = '/static/'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' <---ACTIVATE this when going to deployment
 #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#MEDIA_URL = CLOUDFRONT_URL
-#CLOUDFRONT_PUB_KEY=os.getenv('CLOUDFRONT_PUB')
-#CLOUDFRONT_SECRET=os.getenv('CLOUDFRONT_SECRET')
-#AWS_DEFAULT_ACL='public-read'
-#AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
+
+CLOUDFRONT_PUB_KEY=os.getenv('CLOUDFRONT_PUB')
+CLOUDFRONT_SECRET=os.getenv('CLOUDFRONT_SECRET')
+AWS_DEFAULT_ACL='public-read'
+                           #
 
 
 
+
+# Use S3 for media files storage
+
+
+CLOUDFRONT_URL = 'https://d17usxoyp786nd.cloudfront.net/'  #TOOK OUT A / 11/6/23
+MEDIA_URL = CLOUDFRONT_URL
+AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL   
+
+DJANGO_STATIC = True
+
+DJANGO_STATIC_FILE_PROXY = 'cloudfront.file_proxy'
+
+COMPRESS_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+COMPRESS_ENABLED= True
+COMPRESS_URL= CLOUDFRONT_URL
+
+STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Use S3 for media files storage
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 INSTALLED_APPS = [
 
     ##### H E R O K U    B U L L S H I T #######################
-    "whitenoise.runserver_nostatic",
+    #"whitenoise.runserver_nostatic",
     ##### "serves static files my ass!  ##############"
     'flashcardgameapp',
     'django.contrib.admin',
@@ -79,7 +102,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     ##### H E R O K U    B U L L S H I T #######################
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    #"whitenoise.middleware.WhiteNoiseMiddleware",
     ##### "serves static files my ass!  ##############"
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -186,25 +209,27 @@ USE_TZ = True
 # with this...
 
 ########################################################
-STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
-STATIC_URL = 'static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
+#STATIC_URL = 'static/'
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
+
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'flashcardgameapp', 'static','flashcardgameapp')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'flashcardgameapp')
 
 
 
 
-print(f"STATIC FILES DIRS-{STATICFILES_DIRS}")
-print(f"Static root is {STATIC_ROOT}")
 
 
 ########### H E R O K U    B U L L S H I T ####################
-STORAGES = {
-    # Enable WhiteNoise's GZip and Brotli compression of static assets:
-    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+#STORAGES = {
+#    # Enable WhiteNoise's GZip and Brotli compression of static assets:
+#    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+#    "staticfiles": {
+#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#    },
+#}
 ###############################################################
 
 
