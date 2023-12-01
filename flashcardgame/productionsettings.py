@@ -87,7 +87,7 @@ STATIC_URL = '/static/'
 INSTALLED_APPS = [
 
     'flashcardgameapp',
-    'flashcardgame',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -95,9 +95,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    ##### H E R O K U    B U L L S H I T #######################
-    "whitenoise.runserver_nostatic",
-    ##### "serves static files my ass!  ##############"
 ]
 
 MIDDLEWARE = [
