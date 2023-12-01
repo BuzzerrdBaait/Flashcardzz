@@ -43,23 +43,23 @@ else:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ##############A M A Z O N   M E D I A   P A T H S###################
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')            #
-AWS_SECRET_ACCESS_KEY =os.environ.get('AWS_SECRET_ACCESS_KEY')     #
-AWS_STORAGE_BUCKET_NAME =os.environ.get('S3_BUCKET')               #
-CLOUDFRONT_URL = 'https://d17usxoyp786nd.cloudfront.net/'          #
-DJANGO_STATIC = True                                               #
-DJANGO_STATIC_FILE_PROXY = 'cloudfront.file_proxy'                 #
-COMPRESS_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-COMPRESS_ENABLED= True
-COMPRESS_URL= CLOUDFRONT_URL
-STATIC_URL = '/static/'
+#AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')            #
+#AWS_SECRET_ACCESS_KEY =os.environ.get('AWS_SECRET_ACCESS_KEY')     #
+#AWS_STORAGE_BUCKET_NAME =os.environ.get('S3_BUCKET')               #
+#CLOUDFRONT_URL = 'https://d17usxoyp786nd.cloudfront.net/'          #
+#DJANGO_STATIC = True                                               #
+#DJANGO_STATIC_FILE_PROXY = 'cloudfront.file_proxy'                 #
+#COMPRESS_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#COMPRESS_ENABLED= True
+#COMPRESS_URL= CLOUDFRONT_URL
+#STATIC_URL = '/static/'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' <---ACTIVATE this when going to deployment
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = CLOUDFRONT_URL
-CLOUDFRONT_PUB_KEY=os.getenv('CLOUDFRONT_PUB')
-CLOUDFRONT_SECRET=os.getenv('CLOUDFRONT_SECRET')
-AWS_DEFAULT_ACL='public-read'
-AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#MEDIA_URL = CLOUDFRONT_URL
+#CLOUDFRONT_PUB_KEY=os.getenv('CLOUDFRONT_PUB')
+#CLOUDFRONT_SECRET=os.getenv('CLOUDFRONT_SECRET')
+#AWS_DEFAULT_ACL='public-read'
+#AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_URL                              #
 
 
 DEBUG = False
