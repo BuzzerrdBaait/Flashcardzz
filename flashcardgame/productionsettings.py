@@ -115,7 +115,7 @@ ROOT_URLCONF = 'flashcardgameapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'flashcardgameapp', 'templates', 'flashcardgameapp')],
+        'DIRS': [os.path.join(BASE_DIR, 'flashcardgameapp', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
