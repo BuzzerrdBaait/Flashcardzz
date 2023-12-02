@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     initial = False
 
     dependencies = [
-        ('auth', '0001_initial.py'),
+        ('auth',),
     ]
 
     operations = [
